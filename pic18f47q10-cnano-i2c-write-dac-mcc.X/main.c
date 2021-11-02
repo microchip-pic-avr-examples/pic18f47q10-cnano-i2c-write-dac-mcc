@@ -19,16 +19,39 @@
     THIS SOFTWARE.
 */
 #include "mcc_generated_files/system/system.h"
+#include "mcc_generated_files/i2c_host/i2c_host_types.h"
+#include "mcc_generated_files/i2c_host/mssp1.h"
+
 
 #define I2C_CLIENT_ADDR 0x48 /* 7-bit Address */
 #define TC1321_REG_ADDR 0x00
 #define DATA_HIGH       0xFF
 #define DATALENGTH      3
 
+
+const struct I2C_HOST_INTERFACE *I2C = &i2c1_host_Interface;
+
+/* Callback function to handle errors */
+void I2C_Callback()
+{
+    if(I2C1_ErrorGet() == I2C_ERROR_NONE)
+    {
+        /* Transfer is completed successfully */
+    }
+    else
+    {
+        /* Error occurred during transfer. */
+    }
+}
+
+
 void main(void)
 {
     /* Initialize the device */
     SYSTEM_Initialize();
+    /* Set callback function */
+    I2C->CallbackRegister(I2C_Callback);
+    
     uint8_t data[DATALENGTH];
     data[0] = TC1321_REG_ADDR;
     data[1] = DATA_HIGH;
@@ -37,7 +60,7 @@ void main(void)
     while (1)
     {
         /* Write to DATA REGISTER in TC1321 */
-        I2C1_Write(I2C_CLIENT_ADDR, data, DATALENGTH);
+        I2C->Write(I2C_CLIENT_ADDR, data, DATALENGTH);
         /* Delay 1 second */
         __delay_ms(1000);
         /* Overwrite DATA with its inverse */
