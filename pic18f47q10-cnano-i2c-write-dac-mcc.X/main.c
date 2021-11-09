@@ -28,29 +28,13 @@
 #define DATA_HIGH       0xFF
 #define DATALENGTH      3
 
-
-const struct I2C_HOST_INTERFACE *I2C = &i2c1_host_Interface;
-
-/* Callback function to handle errors */
-void I2C_Callback()
-{
-    if(I2C1_ErrorGet() == I2C_ERROR_NONE)
-    {
-        /* Transfer is completed successfully */
-    }
-    else
-    {
-        /* Error occurred during transfer. */
-    }
-}
+const i2c_host_interface_t *I2C = &i2c1_host_interface;
 
 
 void main(void)
 {
     /* Initialize the device */
     SYSTEM_Initialize();
-    /* Set callback function */
-    I2C->CallbackRegister(I2C_Callback);
     
     uint8_t data[DATALENGTH];
     data[0] = TC1321_REG_ADDR;
@@ -60,11 +44,26 @@ void main(void)
     while (1)
     {
         /* Write to DATA REGISTER in TC1321 */
-        I2C->Write(I2C_CLIENT_ADDR, data, DATALENGTH);
+        if (I2C->Write(I2C_CLIENT_ADDR, data, DATALENGTH))
+        {
+            while(I2C->IsBusy())
+            {
+                I2C->Tasks();
+            }
+            if (I2C->ErrorGet() == I2C_ERROR_NONE)
+            {
+                /* Write operation is successful */
+            }
+            else
+            {
+                /* Error handling */
+            }
+            
+            /* Toggle the output data */
+            data[1] = ~data[1];
+            data[2] = ~data[2];  
+        }
         /* Delay 1 second */
         __delay_ms(1000);
-        /* Overwrite DATA with its inverse */
-        data[1] = ~data[1];
-        data[2] = ~data[2];
     }
 }

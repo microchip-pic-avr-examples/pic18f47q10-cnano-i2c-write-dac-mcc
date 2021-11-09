@@ -11,6 +11,7 @@
           <itemPath>mcc_generated_files/i2c_host/mssp1.h</itemPath>
           <itemPath>mcc_generated_files/i2c_host/i2c_host_interface.h</itemPath>
           <itemPath>mcc_generated_files/i2c_host/i2c_host_types.h</itemPath>
+          <itemPath>mcc_generated_files/i2c_host/i2c_host_event_types.h</itemPath>
         </logicalFolder>
         <logicalFolder name="system" displayName="system" projectFiles="true">
           <itemPath>mcc_generated_files/system/interrupt.h</itemPath>
