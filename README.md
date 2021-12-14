@@ -5,7 +5,7 @@
 # PIC18F47Q10 I2C Host Write Data
 
 ## Objective
-This repository contains an example of bare-metal source code for I2C as described in [TB3281 - Getting Started with I2C Using MSSP on PIC18](http://ww1.microchip.com/downloads/en/Appnotes/Getting_Started_With_I2C_Using_MSSP_on%20PIC18_90003281A.pdf) document from Microchip. <!-- This link has to be updated, once the tech brief goes live! -->
+This repository contains an example of a MCC-melody configured project for I2C as described in [TB3281 - Getting Started with I2C Using MSSP on PIC18](http://ww1.microchip.com/downloads/en/Appnotes/Getting_Started_With_I2C_Using_MSSP_on%20PIC18_90003281A.pdf) document from Microchip. <!-- This link has to be updated, once the tech brief goes live! -->
 
 The PIC18F47Q10 configured in I2C Host Mode using the MSSP1 peripheral and performing write operations. This example will use the client [TC1321](https://ww1.microchip.com/downloads/en/devicedoc/21387c.pdf), an 10 bit Digital-to-Analog converter (DAC), addressed in 7-bit mode.
 
